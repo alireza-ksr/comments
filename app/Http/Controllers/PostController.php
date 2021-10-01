@@ -36,6 +36,9 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $fileName=time().'.'.$request->image->extension();
+       $request->image->move(public_path('upload'),$fileName);
+//        Post::create($request->file('image'));
         Post::create($request->all());
         return redirect()->route('post.index')->with('success', 'record created successfully');
     }
