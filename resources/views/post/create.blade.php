@@ -12,6 +12,7 @@
             </div>
         </div>
     </div>
+    @include('layouts.partials.error')
 
 
     <form action="{{ route('post.store') }}" method="POST" enctype="multipart/form-data">

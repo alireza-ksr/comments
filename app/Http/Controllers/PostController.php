@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+//use Dotenv\Validator;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Validator;
 class PostController extends Controller
 {
     /**
@@ -36,6 +37,14 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $validator=Validator::make($request->all(),[
+            'title'=>'required|min:5',
+            'user'=>'required',
+            'image'=>'file|size:512|mimes:jpg,png',
+        ]);
+        if ($validator->fails()){
+            return redirect()->back()->withErrors($validator);
+        }
         $fileName=time().'.'.$request->image->extension();
        $request->image->move(public_path('upload'),$fileName);
 //        Post::create($request->file('image'));
