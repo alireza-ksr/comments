@@ -37,14 +37,20 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $validator=Validator::make($request->all(),[
-            'title'=>'required|min:5',
+        $request->validate([
+            'title'=>'required|min:6',
             'user'=>'required',
             'image'=>'file|size:512|mimes:jpg,png',
+
         ]);
-        if ($validator->fails()){
-            return redirect()->back()->withErrors($validator);
-        }
+//        $validator=Validator::make($request->all(),[
+//            'title'=>'required|min:5',
+//            'user'=>'required',
+//            'image'=>'file|size:512|mimes:jpg,png',
+//        ]);
+//        if ($validator->fails()){
+//            return redirect()->back()->withErrors($validator);
+//        }
         $fileName=time().'.'.$request->image->extension();
        $request->image->move(public_path('upload'),$fileName);
 //        Post::create($request->file('image'));
