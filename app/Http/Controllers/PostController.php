@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 //use Dotenv\Validator;
+use App\Rules\Uppercase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 class PostController extends Controller
@@ -38,11 +39,15 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title'=>'required|min:6',
-            'user'=>'required',
-            'image'=>'file|size:512|mimes:jpg,png',
+            'title'=>['required',new Uppercase()]
+            ]);
 
-        ]);
+//        ]);  $request->validate([
+//            'title'=>'required|min:6',
+//            'user'=>'required',
+//            'image'=>'file|size:512|mimes:jpg,png',
+//
+//        ]);
 //        $validator=Validator::make($request->all(),[
 //            'title'=>'required|min:5',
 //            'user'=>'required',
