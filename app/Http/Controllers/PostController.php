@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Rules\Uppercase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\StorePost;
 class PostController extends Controller
 {
     /**
@@ -36,11 +37,13 @@ class PostController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePost $request)
     {
-        $request->validate([
-            'title'=>['required',new Uppercase()]
-            ]);
+//        $validate=$request->validated();
+//        dd($validate);
+//        $request->validate([
+//            'title'=>['required',new Uppercase()]
+//            ]);
 
 //        ]);  $request->validate([
 //            'title'=>'required|min:6',
@@ -58,6 +61,7 @@ class PostController extends Controller
 //        }
         $fileName=time().'.'.$request->image->extension();
        $request->image->move(public_path('upload'),$fileName);
+
 //        Post::create($request->file('image'));
         Post::create($request->all());
         return redirect()->route('post.index')->with('success', 'record created successfully');
